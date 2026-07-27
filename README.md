@@ -1,5 +1,5 @@
 # The Cybersecurity Landscape — Interactive Teaching Map
-Published at [https://claude.ai/public/artifacts/ca235112-7515-4705-b934-579ed5794bea](https://claude.ai/public/artifacts/ca235112-7515-4705-b934-579ed5794bea)
+Published at [https://claude.ai/public/artifacts/00b63ddc-2409-47ee-91b2-95e75a1deb5d](https://claude.ai/public/artifacts/00b63ddc-2409-47ee-91b2-95e75a1deb5d)
 
 An interactive, single-file visual map of the cybersecurity field, built for **teaching and learning**. It lays out **7 families** and **27 domains** of security as a branching map. Click any branch to open its domains, then pick a domain to watch a short animation explaining the core idea, alongside its key topics, common tools, and the career roles it leads to.
 
