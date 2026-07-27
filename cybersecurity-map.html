@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Cybersecurity Landscape — Teaching Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B1420; --bg-2:#0E1A29; --panel:#12213494; --panel-solid:#122134;
+    --line:#1D3450; --line-soft:#16283e; --ink:#E4ECF5; --ink-dim:#8FA6BF; --ink-faint:#5E7591;
+    --cyan:#38BDF8;
+    --f1:#38BDF8; --f2:#FB7185; --f3:#A78BFA; --f4:#34D399; --f5:#FBBF24; --f6:#F472B6; --f7:#FB923C;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;font-family:'Inter',system-ui,sans-serif;color:var(--ink);
+    background:radial-gradient(1200px 600px at 15% -10%, #163150 0%, transparent 60%),linear-gradient(180deg,var(--bg-2),var(--bg));
+    background-attachment:fixed;min-height:100vh;-webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:linear-gradient(var(--line-soft) 1px,transparent 1px),linear-gradient(90deg,var(--line-soft) 1px,transparent 1px);
+    background-size:40px 40px;opacity:.35;mask-image:radial-gradient(circle at 40% 20%,#000 0%,transparent 85%);
+  }
+  .wrap{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:44px 26px 70px;}
+  .byline{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:0 0 22px;margin-bottom:26px;border-bottom:1px solid var(--line);}
+  .brand{display:inline-flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);transition:.15s;}
+  .brand:hover{color:var(--cyan);}
+  .brand-mark{width:38px;height:38px;border-radius:10px;flex:none;display:grid;place-items:center;background:linear-gradient(140deg,#13253c,#0c1826);border:1px solid #2b4a6e;box-shadow:0 4px 14px -5px #38bdf866;}
+  .brand-mark svg{width:22px;height:22px;}
+  .brand-mark img{width:24px;height:24px;object-fit:contain;display:block;}
+  .brand-word{display:flex;flex-direction:column;line-height:1.1;}
+  .brand-word strong{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;letter-spacing:-.01em;}
+  .brand-word small{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-faint);letter-spacing:.04em;margin-top:2px;}
+  .by-div{width:1px;align-self:stretch;background:var(--line);margin:2px 2px;}
+  .by-person{display:flex;flex-direction:column;line-height:1.15;}
+  .by-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.98rem;}
+  .by-role{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim);letter-spacing:.03em;margin-top:2px;}
+  .by-spacer{flex:1;}
+  .by-link{display:inline-flex;align-items:center;gap:8px;text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:8px 13px;color:var(--ink-dim);font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.04em;transition:.15s;}
+  .by-link:hover{border-color:#38BDF8;color:#38BDF8;background:#38bdf814;}
+  .by-link svg{width:16px;height:16px;fill:currentColor;flex:none;}
+  @media(max-width:560px){.by-spacer{display:none;}.by-div{display:none;}.byline{gap:14px;}}
+  header{margin-bottom:34px;}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--cyan);display:inline-flex;align-items:center;gap:10px;margin:0 0 16px;}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--cyan);opacity:.7;}
+  h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.1rem,5vw,3.6rem);line-height:1.02;letter-spacing:-.02em;margin:0 0 14px;}
+  h1 span{color:var(--cyan);}
+  .lede{max-width:620px;color:var(--ink-dim);font-size:1.02rem;line-height:1.55;margin:0;}
+  .meta{display:flex;flex-wrap:wrap;gap:22px;margin-top:22px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--ink-faint);}
+  .meta b{color:var(--ink);font-weight:600;}
+  .toolbar{display:flex;gap:12px;align-items:center;margin:26px 0 6px;flex-wrap:wrap;}
+  .search{flex:1;min-width:220px;position:relative;}
+  .search input{width:100%;background:var(--panel-solid);border:1px solid var(--line);border-radius:10px;color:var(--ink);font-family:'IBM Plex Mono',monospace;font-size:13.5px;padding:12px 14px 12px 40px;outline:none;}
+  .search input::placeholder{color:var(--ink-faint);}
+  .search input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #38bdf82e;}
+  .search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);stroke:var(--ink-faint);}
+  .btn-reset{background:transparent;border:1px solid var(--line);color:var(--ink-dim);font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.05em;padding:11px 16px;border-radius:10px;cursor:pointer;transition:.15s;}
+  .btn-reset:hover{border-color:var(--cyan);color:var(--ink);}
+  .layout{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:24px;align-items:start;}
+  @media(max-width:860px){.layout{grid-template-columns:1fr;}}
+  .tree{display:flex;flex-direction:column;gap:12px;}
+  .trunk{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);padding:0 4px 4px;display:flex;align-items:center;gap:10px;}
+  .trunk .dot{width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan);}
+  .family{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;backdrop-filter:blur(3px);border-left:3px solid var(--fam);}
+  .family.hidden{display:none;}
+  .fam-head{width:100%;text-align:left;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:16px 18px;color:var(--ink);font-family:'Space Grotesk',sans-serif;transition:background .15s;}
+  .fam-head:hover{background:#ffffff08;}
+  .fam-head:focus-visible{outline:2px solid var(--cyan);outline-offset:-2px;}
+  .fam-node{width:11px;height:11px;border-radius:3px;background:var(--fam);flex:none;box-shadow:0 0 12px -1px var(--fam);transition:transform .2s;}
+  .family.open .fam-node{transform:rotate(45deg);}
+  .fam-title{flex:1;}
+  .fam-title strong{display:block;font-size:1.06rem;font-weight:600;letter-spacing:-.01em;}
+  .fam-title small{display:block;color:var(--ink-dim);font-size:12.5px;font-weight:400;margin-top:3px;font-family:'Inter',sans-serif;}
+  .fam-count{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-faint);border:1px solid var(--line);border-radius:20px;padding:3px 10px;flex:none;}
+  .chevron{flex:none;stroke:var(--ink-faint);transition:transform .2s;}
+  .family.open .chevron{transform:rotate(90deg);stroke:var(--fam);}
+  .leaves{display:none;flex-direction:column;gap:2px;padding:2px 14px 16px 30px;margin-left:20px;border-left:1px dashed var(--line);position:relative;}
+  .family.open .leaves{display:flex;}
+  .leaf{position:relative;text-align:left;background:none;border:none;cursor:pointer;color:var(--ink-dim);font-family:'Inter',sans-serif;font-size:14px;padding:9px 12px;border-radius:8px;transition:.13s;display:flex;align-items:center;gap:9px;}
+  .leaf::before{content:"";position:absolute;left:-16px;top:50%;width:14px;height:1px;background:var(--line);}
+  .leaf::after{content:"";width:6px;height:6px;border-radius:50%;border:1.5px solid var(--fam);flex:none;transition:.13s;}
+  .leaf:hover{background:#ffffff08;color:var(--ink);}
+  .leaf:focus-visible{outline:2px solid var(--cyan);outline-offset:1px;}
+  .leaf.active{background:var(--fam);color:#0a1420;font-weight:600;}
+  .leaf.active::after{background:#0a1420;border-color:#0a1420;}
+  .detail{position:sticky;top:22px;background:var(--panel-solid);border:1px solid var(--line);border-radius:var(--radius);min-height:340px;padding:0;overflow:hidden;}
+  .detail-bar{height:4px;background:var(--cyan);transition:background .25s;}
+  .detail-inner{padding:24px 26px 30px;}
+  .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:340px;padding:30px;color:var(--ink-faint);gap:16px;}
+  .empty svg{stroke:var(--line);}
+  .empty p{margin:0;font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.04em;max-width:280px;line-height:1.6;}
+  .d-fam{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--acc);display:inline-flex;align-items:center;gap:8px;margin-bottom:12px;}
+  .d-fam .sq{width:9px;height:9px;border-radius:2px;background:var(--acc);}
+  .d-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.7rem;letter-spacing:-.02em;margin:0 0 12px;line-height:1.1;}
+  .d-def{color:var(--ink-dim);font-size:1rem;line-height:1.6;margin:0 0 18px;}
+  .viz{color:var(--acc);border:1px solid var(--line);border-radius:12px;background:linear-gradient(180deg,#0c1a2b,#0a1626);padding:10px 10px 4px;margin:0 0 22px;overflow:hidden;}
+  .viz svg{width:100%;height:auto;display:block;}
+  .viz-cap{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-faint);text-align:center;margin:6px 2px 4px;letter-spacing:.03em;line-height:1.4;}
+  .d-section{margin-bottom:20px;}
+  .d-section:last-child{margin-bottom:0;}
+  .d-label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 11px;display:flex;align-items:center;gap:8px;}
+  .d-label::after{content:"";flex:1;height:1px;background:var(--line);}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;}
+  .chip{font-size:12.5px;padding:5px 11px;border-radius:7px;font-family:'Inter',sans-serif;background:#ffffff0a;border:1px solid var(--line);color:var(--ink);}
+  .chip.role{background:var(--acc-soft);border-color:var(--acc-bord);color:var(--acc);font-weight:500;}
+  .chip.tool{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-dim);}
+  footer{margin-top:40px;text-align:center;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.05em;}
+  footer b{color:var(--ink-dim);font-weight:500;}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="byline">
+      <a class="brand" href="https://blockstash.in" target="_blank" rel="noopener" aria-label="Blockstash — blockstash.in">
+        <span class="brand-mark">
+          <img src="data:image/png;base64,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" alt="Blockstash logo">
+        </span>
+        <span class="brand-word"><strong>Blockstash</strong><small>blockstash.in</small></span>
+      </a>
+      <div class="by-div"></div>
+      <div class="by-person">
+        <span class="by-name">Deepesh Chaudhari</span>
+        <span class="by-role">Founder, Blockstash</span>
+      </div>
+      <div class="by-spacer"></div>
+      <a class="by-link" href="https://www.linkedin.com/in/amideepesh/" target="_blank" rel="noopener" aria-label="Deepesh Chaudhari on LinkedIn">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+        LinkedIn
+      </a>
+    </div>
+    <p class="eyebrow">Teaching Map</p>
+    <h1>The <span>Cybersecurity</span><br>Landscape</h1>
+    <p class="lede">A branching map of the field's major families and the domains inside them. Click any branch to open its domains, then pick a domain to watch a short animation of the core idea and see its topics, tools, and career paths.</p>
+    <div class="meta">
+      <span><b id="famCount">7</b> families</span>
+      <span><b id="domCount">27</b> domains</span>
+      <span>Click a branch → pick a domain → teach</span>
+    </div>
+  </header>
+  <div class="toolbar">
+    <div class="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="search" type="text" placeholder="Search domains, topics, or tools..." aria-label="Search the cybersecurity map">
+    </div>
+    <button class="btn-reset" id="reset">Reset map</button>
+  </div>
+  <div class="layout">
+    <div class="tree" id="tree">
+      <div class="trunk"><span class="dot"></span> Root · Cybersecurity</div>
+    </div>
+    <aside class="detail" id="detail" aria-live="polite">
+      <div class="detail-bar" id="detailBar"></div>
+      <div class="empty" id="empty">
+        <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke-width="1.4"><path d="M12 2v6m0 0-3-2m3 2 3-2M4 10l2 10h12l2-10M4 10h16M9 14v3m6-3v3"/></svg>
+        <p>Select a domain from the map to watch it explained and explore its tools and career paths.</p>
+      </div>
+      <div class="detail-inner" id="detailInner" style="display:none"></div>
+    </aside>
+  </div>
+  <footer>Built as an open teaching resource · <b>Explore, don't memorize</b> — the map is bigger than any one career</footer>
+</div>
+<script>
+const FAM_COLORS = ['--f1','--f2','--f3','--f4','--f5','--f6','--f7'];
+const DATA = [
+  {name:"Defensive Security", sub:"Blue Team — detect, defend, and respond in real time", domains:[
+    {name:"Network Security", anim:"net", def:"Protecting data in transit and the infrastructure that carries it.", topics:["Firewalls","IDS / IPS","VPNs","Network segmentation","Zero Trust","TLS"], tools:["Wireshark","Suricata","Zeek","pfSense","Nmap"], roles:["Network Security Engineer","NOC Analyst"]},
+    {name:"Endpoint Security", anim:"endpoint", def:"Securing laptops, servers, phones, and every device on the network.", topics:["EDR / XDR","Host hardening","Patch management","Antivirus","Device control"], tools:["CrowdStrike","MS Defender","SentinelOne","osquery"], roles:["Endpoint Security Engineer"]},
+    {name:"Security Operations (SOC)", anim:"soc", def:"Round-the-clock monitoring, triage, and alerting from a central hub.", topics:["SIEM","Log analysis","Alert triage","Detection engineering","SOAR"], tools:["Splunk","Microsoft Sentinel","Elastic SIEM","Wazuh"], roles:["SOC Analyst (T1–T3)","Detection Engineer"]},
+    {name:"Incident Response", anim:"incident", def:"Containing, eradicating, and recovering from active breaches.", topics:["IR lifecycle","Containment","Playbooks","Chain of custody","Post-incident review"], tools:["TheHive","Velociraptor","GRR","Cortex"], roles:["Incident Responder","DFIR Analyst"]}
+  ]},
+  {name:"Offensive Security", sub:"Red Team — think like an attacker to find gaps first", domains:[
+    {name:"Penetration Testing", anim:"pentest", def:"Authorized, simulated attacks to find weaknesses in systems and apps.", topics:["Reconnaissance","Exploitation","Privilege escalation","OWASP Top 10","Reporting"], tools:["Metasploit","Burp Suite","Kali Linux","sqlmap","Nmap"], roles:["Penetration Tester","Ethical Hacker"]},
+    {name:"Red Teaming", anim:"redteam", def:"Full-scope adversary simulation testing people, process, and technology together.", topics:["MITRE ATT&CK","C2 frameworks","Social engineering","Evasion","Physical intrusion"], tools:["Cobalt Strike","Sliver","BloodHound","Covenant"], roles:["Red Team Operator"]},
+    {name:"Vulnerability Management", anim:"vuln", def:"Finding, scoring, and tracking weaknesses across an organization at scale.", topics:["Scanning","CVSS scoring","Patch prioritization","Attack surface mgmt"], tools:["Nessus","Qualys","OpenVAS","Tenable"], roles:["Vulnerability Analyst"]},
+    {name:"Exploit Development", anim:"exploit", def:"Researching software flaws and turning them into working exploits.", topics:["Reverse engineering","Fuzzing","Buffer overflows","Shellcode","0-days"], tools:["Ghidra","IDA Pro","GDB","pwntools","AFL"], roles:["Security Researcher","Exploit Developer"]}
+  ]},
+  {name:"Application & Cloud", sub:"Build security into software and the platforms it runs on", domains:[
+    {name:"Application Security (AppSec)", anim:"appsec", def:"Securing software across the whole development lifecycle.", topics:["OWASP Top 10","SAST / DAST","Secure code review","Threat modeling"], tools:["Burp Suite","Semgrep","Snyk","OWASP ZAP"], roles:["Application Security Engineer"]},
+    {name:"Cloud Security", anim:"cloud", def:"Protecting workloads, identities, and data in AWS, Azure, and GCP.", topics:["IAM policies","CSPM","Misconfiguration","Shared responsibility","Containers"], tools:["Prowler","ScoutSuite","Wiz","AWS Security Hub"], roles:["Cloud Security Engineer"]},
+    {name:"DevSecOps", anim:"devsecops", def:"Automating security checks inside CI/CD pipelines — shifting left.", topics:["Shift-left","IaC scanning","Secrets management","SBOM","Pipeline security"], tools:["Trivy","Checkov","HashiCorp Vault","GitLab CI"], roles:["DevSecOps Engineer"]},
+    {name:"API & Mobile Security", anim:"api", def:"Securing the APIs and mobile apps that expose modern services.", topics:["API authentication","OWASP API Top 10","Cert pinning","Mobile RE"], tools:["Postman","MobSF","Frida","Burp Suite"], roles:["API Security Specialist"]}
+  ]},
+  {name:"Cryptography & Identity", sub:"Protect secrets and control who can access what", domains:[
+    {name:"Cryptography", anim:"crypto", def:"The mathematics of securing data, messages, and identities.", topics:["Symmetric / asymmetric","Hashing","PKI","Digital signatures","Post-quantum"], tools:["OpenSSL","GnuPG","Hashcat","CyberChef"], roles:["Cryptographer","PKI Engineer"]},
+    {name:"Identity & Access Management", anim:"iam", def:"Managing digital identities and the permissions attached to them.", topics:["SSO","MFA","RBAC","Least privilege","Federation","Zero Trust"], tools:["Okta","Entra ID","Keycloak","CyberArk"], roles:["IAM Engineer"]},
+    {name:"Data Security & Privacy", anim:"data", def:"Protecting sensitive data and meeting privacy law.", topics:["Encryption at rest","DLP","Data classification","GDPR / DPDP","Masking"], tools:["MS Purview","Varonis","BigID"], roles:["Privacy Engineer","Data Protection Officer"]}
+  ]},
+  {name:"Governance, Risk & Compliance", sub:"Align security with business risk, law, and standards", domains:[
+    {name:"Governance & Risk", anim:"governance", def:"Setting policy and managing security risk at the organizational level.", topics:["Risk assessment","Security policy","NIST CSF","ISO 27001","Business impact"], tools:["Risk registers","Archer","Vanta"], roles:["GRC Analyst","CISO"]},
+    {name:"Compliance & Audit", anim:"compliance", def:"Proving that controls meet standards and regulations.", topics:["ISO 27001","SOC 2","PCI-DSS","HIPAA","Evidence collection"], tools:["Vanta","Drata","AuditBoard"], roles:["Compliance Analyst","IT Auditor"]},
+    {name:"Security Awareness", anim:"awareness", def:"Turning people into a strong first line of defense.", topics:["Phishing simulation","Human risk","Security culture","Policy training"], tools:["KnowBe4","GoPhish","Proofpoint"], roles:["Security Awareness Manager"]},
+    {name:"Business Continuity & DR", anim:"bcdr", def:"Keeping the business running through disruption and disaster.", topics:["BCP","Disaster recovery","RTO / RPO","Tabletop exercises","Resilience"], tools:["Runbooks","Backup platforms"], roles:["BC / DR Specialist"]}
+  ]},
+  {name:"Intelligence & Forensics", sub:"Investigate attackers, evidence, and threats", domains:[
+    {name:"Digital Forensics (DFIR)", anim:"dfir", def:"Recovering and analyzing digital evidence after an incident.", topics:["Disk & memory forensics","Chain of custody","Timeline analysis","Artifacts","Anti-forensics"], tools:["Autopsy","Volatility","FTK","Magnet AXIOM"], roles:["Digital Forensic Analyst"]},
+    {name:"Threat Intelligence", anim:"threatintel", def:"Studying adversaries, their techniques, and their indicators.", topics:["IOCs","MITRE ATT&CK","Actor tracking","Intel lifecycle","TLP"], tools:["MISP","OpenCTI","VirusTotal","Recorded Future"], roles:["Threat Intelligence Analyst"]},
+    {name:"Malware Analysis", anim:"malware", def:"Dissecting malicious code to understand and detect it.", topics:["Static / dynamic analysis","Sandboxing","Unpacking","YARA rules","RE"], tools:["Ghidra","REMnux","ANY.RUN","Cuckoo"], roles:["Malware Analyst","Reverse Engineer"]},
+    {name:"OSINT & Blockchain Forensics", anim:"osint", def:"Tracing people, assets, and crypto across open sources and the chain.", topics:["OSINT","On-chain analysis","Wallet attribution","Laundering typologies","Crypto tracing"], tools:["Maltego","SpiderFoot","Chainalysis","Chain explorers"], roles:["OSINT Investigator","Crypto Forensic Investigator"]}
+  ]},
+  {name:"Specialized & Emerging", sub:"Frontier domains where new attack surfaces open up", domains:[
+    {name:"IoT / OT / ICS Security", anim:"iot", def:"Securing industrial systems, sensors, and critical infrastructure.", topics:["SCADA","PLCs","Purdue model","Modbus / protocols","Safety"], tools:["Shodan","Claroty","Wireshark","Nmap"], roles:["OT Security Engineer"]},
+    {name:"AI / ML Security", anim:"aiml", def:"Defending machine-learning systems — and using AI in defense.", topics:["Adversarial ML","Prompt injection","Data poisoning","Model theft","LLM security"], tools:["Garak","PyRIT","ART toolbox"], roles:["AI Security Researcher"]},
+    {name:"Hardware & Embedded", anim:"hardware", def:"Attacking and defending chips, firmware, and physical devices.", topics:["Firmware analysis","Side-channel attacks","JTAG","Secure boot","TPM"], tools:["ChipWhisperer","Binwalk","Bus Pirate"], roles:["Hardware Security Researcher"]},
+    {name:"Blockchain / Web3 Security", anim:"web3", def:"Auditing smart contracts and securing decentralized applications.", topics:["Contract audits","Reentrancy","DeFi exploits","Wallet security","Consensus attacks"], tools:["Slither","Mythril","Foundry","Echidna"], roles:["Smart Contract Auditor"]}
+  ]}
+];
+
+// ---------- Per-domain explanatory animations (self-contained SVG / SMIL) ----------
+const R="#FB7185", G="#34D399", N="#3A5170", T="#7C93AD", A="#FBBF24";
+const VIZ = {
+net:{c:"Good packets pass the firewall; malicious traffic is blocked.", s:`<svg viewBox="0 0 340 130"><circle cx="30" cy="65" r="11" fill="none" stroke="${N}" stroke-width="2"/><circle cx="310" cy="65" r="11" fill="none" stroke="${N}" stroke-width="2"/><rect x="162" y="28" width="16" height="74" rx="3" fill="currentColor" fill-opacity=".14" stroke="currentColor" stroke-width="2"/><text x="170" y="120" text-anchor="middle" font-size="9" fill="${T}" font-family="monospace">FIREWALL</text><circle r="5" fill="${G}"><animateMotion dur="2.4s" repeatCount="indefinite" path="M46 48 L296 48"/></circle><circle r="5" fill="${G}"><animateMotion dur="2.4s" begin="1.2s" repeatCount="indefinite" path="M46 82 L296 82"/></circle><circle r="5" fill="${R}"><animateMotion dur="2.4s" begin=".6s" repeatCount="indefinite" path="M46 65 L158 65"/><animate attributeName="opacity" dur="2.4s" begin=".6s" repeatCount="indefinite" values="1;1;0;0" keyTimes="0;.46;.5;1"/></circle></svg>`},
+endpoint:{c:"EDR raises a shield over every device; threats are deflected.", s:`<svg viewBox="0 0 340 130"><g stroke="${N}" stroke-width="2" fill="none"><rect x="52" y="56" width="36" height="24" rx="2"/><path d="M46 84h48"/><rect x="152" y="56" width="36" height="24" rx="2"/><path d="M146 84h48"/><rect x="252" y="56" width="36" height="24" rx="2"/><path d="M246 84h48"/></g><g fill="currentColor" stroke="currentColor" stroke-width="1.5"><path d="M70 30l12 4v8c0 7-5 11-12 14-7-3-12-7-12-14v-8z"><animate attributeName="fill-opacity" values=".1;.32;.1" dur="2s" repeatCount="indefinite"/></path><path d="M170 30l12 4v8c0 7-5 11-12 14-7-3-12-7-12-14v-8z"><animate attributeName="fill-opacity" values=".1;.32;.1" dur="2s" begin=".6s" repeatCount="indefinite"/></path><path d="M270 30l12 4v8c0 7-5 11-12 14-7-3-12-7-12-14v-8z"><animate attributeName="fill-opacity" values=".1;.32;.1" dur="2s" begin="1.2s" repeatCount="indefinite"/></path></g><circle r="5" fill="${R}"><animateMotion dur="3s" repeatCount="indefinite" path="M170 -8 L170 22 L170 -8"/></circle></svg>`},
+soc:{c:"Monitor, detect, and alert on threats around the clock.", s:`<svg viewBox="0 0 340 130"><circle cx="80" cy="62" r="42" fill="none" stroke="${N}" stroke-width="1.5"/><circle cx="80" cy="62" r="26" fill="none" stroke="${N}" stroke-width="1" stroke-opacity=".6"/><line x1="80" y1="62" x2="80" y2="20" stroke="currentColor" stroke-width="2"><animateTransform attributeName="transform" type="rotate" from="0 80 62" to="360 80 62" dur="3s" repeatCount="indefinite"/></line><circle cx="106" cy="44" r="4" fill="${R}"><animate attributeName="opacity" values="0;1;1;0" dur="3s" repeatCount="indefinite"/></circle><rect x="150" y="36" width="150" height="8" rx="2" fill="${N}"><animate attributeName="width" values="60;150;90;150" dur="2.5s" repeatCount="indefinite"/></rect><rect x="150" y="52" width="120" height="8" rx="2" fill="currentColor" fill-opacity=".5"><animate attributeName="width" values="150;80;150;110" dur="2.2s" repeatCount="indefinite"/></rect><rect x="150" y="68" width="100" height="8" rx="2" fill="${N}"><animate attributeName="width" values="90;150;70;150" dur="2.7s" repeatCount="indefinite"/></rect><rect x="150" y="84" width="140" height="8" rx="2" fill="${R}" fill-opacity=".8"><animate attributeName="opacity" values=".2;1;.2" dur="1.6s" repeatCount="indefinite"/></rect><text x="80" y="118" text-anchor="middle" font-size="9" fill="${T}" font-family="monospace">RADAR + LOG STREAM</text></svg>`},
+incident:{c:"A repeating loop: detect, contain, eradicate, recover.", s:`<svg viewBox="0 0 340 130"><circle cx="170" cy="62" r="42" fill="none" stroke="${N}" stroke-width="2" stroke-dasharray="4 4"/><g fill="currentColor"><circle cx="170" cy="20" r="5"/><circle cx="212" cy="62" r="5"/><circle cx="170" cy="104" r="5"/><circle cx="128" cy="62" r="5"/></g><circle r="6" fill="${R}"><animateMotion dur="4.5s" repeatCount="indefinite" path="M170 20 A42 42 0 0 1 212 62 A42 42 0 0 1 170 104 A42 42 0 0 1 128 62 A42 42 0 0 1 170 20"/></circle><g font-family="monospace" font-size="8" fill="${T}" text-anchor="middle"><text x="170" y="12">DETECT</text><text x="255" y="65">CONTAIN</text><text x="170" y="122">ERADICATE</text><text x="88" y="65">RECOVER</text></g></svg>`},
+pentest:{c:"Probe the wall until a weak point is found.", s:`<svg viewBox="0 0 340 130"><g stroke="${N}" stroke-width="1.5" fill="none"><rect x="90" y="28" width="160" height="72" rx="2"/><path d="M90 52h160M90 76h160M130 28v24M170 52v24M210 28v24M130 76v24M150 28v24M190 76v24"/></g><rect x="170" y="52" width="40" height="24" fill="${R}" fill-opacity=".15" stroke="${R}" stroke-width="1.5"><animate attributeName="fill-opacity" values="0;0;.4;0" dur="3s" repeatCount="indefinite"/></rect><g><circle r="8" fill="none" stroke="currentColor" stroke-width="2"/><line x1="6" y1="6" x2="13" y2="13" stroke="currentColor" stroke-width="2.5"/><animateMotion dur="3s" repeatCount="indefinite" path="M110 44 L230 44 L190 64 L230 90 L110 90 L110 44"/></g><text x="170" y="120" text-anchor="middle" font-size="9" fill="${T}" font-family="monospace">SCANNING PERIMETER</text></svg>`},
+redteam:{c:"Move laterally through each layer toward the crown jewels.", s:`<svg viewBox="0 0 340 130"><g fill="none" stroke="${N}" stroke-width="1.5"><rect x="60" y="18" width="220" height="94" rx="10"/><rect x="100" y="36" width="140" height="58" rx="8"/><rect x="140" y="50" width="60" height="30" rx="6"/></g><text x="170" y="14" text-anchor="middle" font-size="8" fill="${T}" font-family="monospace">PERIMETER</text><path d="M170 58l2 5 5 0-4 4 2 5-5-3-5 3 2-5-4-4 5 0z" fill="currentColor" transform="translate(-2,2)"><animate attributeName="opacity" values=".3;1;.3" dur="1.5s" repeatCount="indefinite"/></path><circle r="5" fill="${R}"><animateMotion dur="4s" repeatCount="indefinite" path="M40 106 L80 92 L120 72 L168 65"/><animate attributeName="opacity" values="1;1;1;1;0;1" keyTimes="0;.3;.6;.85;.9;1" dur="4s" repeatCount="indefinite"/></circle></svg>`},
+vuln:{c:"Scan assets, then rank each by severity.", s:`<svg viewBox="0 0 340 130"><g stroke="${N}"><rect x="80" y="30" width="34" height="22" rx="3" fill="#22344d"><animate attributeName="fill" values="#22344d;#22344d;${R};${R}" keyTimes="0;.28;.32;1" dur="3s" repeatCount="indefinite"/></rect><rect x="126" y="30" width="34" height="22" rx="3" fill="#22344d"><animate attributeName="fill" values="#22344d;#22344d;${G};${G}" keyTimes="0;.3;.34;1" dur="3s" repeatCount="indefinite"/></rect><rect x="172" y="30" width="34" height="22" rx="3" fill="#22344d"><animate attributeName="fill" values="#22344d;#22344d;${A};${A}" keyTimes="0;.32;.36;1" dur="3s" repeatCount="indefinite"/></rect><rect x="218" y="30" width="34" height="22" rx="3" fill="#22344d"><animate attributeName="fill" values="#22344d;#22344d;${G};${G}" keyTimes="0;.34;.38;1" dur="3s" repeatCount="indefinite"/></rect><rect x="80" y="60" width="34" height="22" rx="3" fill="#22344d"><animate attributeName="fill" values="#22344d;#22344d;${G};${G}" keyTimes="0;.6;.64;1" dur="3s" repeatCount="indefinite"/></rect><rect x="126" y="60" width="34" height="22" rx="3" fill="#22344d"><animate attributeName="fill" values="#22344d;#22344d;${R};${R}" keyTimes="0;.62;.66;1" dur="3s" repeatCount="indefinite"/></rect><rect x="172" y="60" width="34" height="22" rx="3" fill="#22344d"><animate attributeName="fill" values="#22344d;#22344d;${G};${G}" keyTimes="0;.64;.68;1" dur="3s" repeatCount="indefinite"/></rect><rect x="218" y="60" width="34" height="22" rx="3" fill="#22344d"><animate attributeName="fill" values="#22344d;#22344d;${A};${A}" keyTimes="0;.66;.7;1" dur="3s" repeatCount="indefinite"/></rect></g><rect x="72" width="188" height="3" fill="currentColor"><animate attributeName="y" values="26;92;26" dur="3s" repeatCount="indefinite"/></rect><text x="170" y="120" text-anchor="middle" font-size="9" fill="${T}" font-family="monospace">SCANNING ASSETS</text></svg>`},
+exploit:{c:"Input overflows its buffer boundary — memory corruption.", s:`<svg viewBox="0 0 340 130"><text x="40" y="38" font-size="9" fill="${T}" font-family="monospace">BUFFER [8 bytes]</text><g stroke="${N}" fill="none">${[0,1,2,3,4,5,6,7].map(i=>`<rect x="${44+i*24}" y="48" width="22" height="26" rx="2"/>`).join("")}</g><line x1="236" y1="42" x2="236" y2="80" stroke="${R}" stroke-width="2" stroke-dasharray="3 3"/><text x="236" y="94" text-anchor="middle" font-size="8" fill="${R}" font-family="monospace">boundary</text><rect x="44" y="48" height="26" rx="2" fill="${G}"><animate attributeName="width" values="0;192;300;300" keyTimes="0;.5;.8;1" dur="3s" repeatCount="indefinite"/><animate attributeName="fill" values="${G};${G};${R};${R}" keyTimes="0;.6;.72;1" dur="3s" repeatCount="indefinite"/></rect><text x="290" y="118" text-anchor="middle" font-size="8" fill="${R}" font-family="monospace">OVERFLOW</text></svg>`},
+appsec:{c:"Scan the code, find the bug, fix it before release.", s:`<svg viewBox="0 0 340 130"><g fill="#22344d">${[[24,150],[41,110],[58,180],[75,90],[92,140]].map(r=>`<rect x="60" y="${r[0]}" width="${r[1]}" height="10" rx="2"/>`).join("")}</g><rect x="52" y="22" width="210" height="15" fill="currentColor" fill-opacity=".14"><animate attributeName="y" values="22;92;22" dur="3s" repeatCount="indefinite"/></rect><circle cx="212" cy="63" r="7" fill="${R}"><animate attributeName="r" values="7;7;0;0;7" keyTimes="0;.5;.57;.95;1" dur="3s" repeatCount="indefinite"/></circle><text x="228" y="67" font-size="9" fill="${G}" font-family="monospace"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.55;.6;.95;1" dur="3s" repeatCount="indefinite"/>fixed</text><text x="170" y="120" text-anchor="middle" font-size="9" fill="${T}" font-family="monospace">SAST / DAST SCAN</text></svg>`},
+cloud:{c:"Close misconfigured gaps — lock down the cloud.", s:`<svg viewBox="0 0 340 130"><g fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-width="2"><circle cx="145" cy="52" r="20"/><circle cx="178" cy="46" r="26"/><circle cx="210" cy="54" r="18"/><rect x="145" y="52" width="65" height="20" stroke="none"/></g><g transform="translate(178,50)"><rect x="-11" y="0" width="22" height="16" rx="2" fill="currentColor"/><path d="M-7 0v-6a7 7 0 0 1 14 0v6" fill="none" stroke="currentColor" stroke-width="2.5"><animateTransform attributeName="transform" type="rotate" values="-42 -7 0;0 -7 0;0 -7 0;-42 -7 0" keyTimes="0;.35;.8;1" dur="3.2s" repeatCount="indefinite"/></path></g><text x="178" y="106" text-anchor="middle" font-size="9" fill="${T}" font-family="monospace">CONFIG LOCKED</text></svg>`},
+devsecops:{c:"Every build passes an automated security gate in the pipeline.", s:`<svg viewBox="0 0 340 130"><line x1="20" y1="66" x2="320" y2="66" stroke="${N}" stroke-width="2"/><rect x="160" y="36" width="20" height="60" rx="3" fill="currentColor" fill-opacity=".15" stroke="currentColor" stroke-width="2"/><g fill="#22344d" stroke="${N}" stroke-width="1.5"><rect x="-24" y="54" width="24" height="24" rx="3"><animateMotion dur="4s" repeatCount="indefinite" path="M0 0 H320"/></rect><rect x="-24" y="54" width="24" height="24" rx="3"><animateMotion dur="4s" begin="1.3s" repeatCount="indefinite" path="M0 0 H320"/></rect><rect x="-24" y="54" width="24" height="24" rx="3"><animateMotion dur="4s" begin="2.6s" repeatCount="indefinite" path="M0 0 H320"/></rect></g><circle cx="170" cy="28" r="0" fill="${G}"><animate attributeName="r" values="0;6;0" dur="1.3s" repeatCount="indefinite"/></circle><text x="170" y="118" text-anchor="middle" font-size="8" fill="${T}" font-family="monospace">CI/CD SECURITY GATE</text></svg>`},
+api:{c:"Client sends a request with a token; the API validates and replies.", s:`<svg viewBox="0 0 340 130"><g stroke="${N}" stroke-width="2" fill="#22344d"><rect x="30" y="42" width="60" height="46" rx="4"/><rect x="250" y="38" width="64" height="54" rx="4"/></g><text x="60" y="104" text-anchor="middle" font-size="8" fill="${T}" font-family="monospace">CLIENT</text><text x="282" y="106" text-anchor="middle" font-size="8" fill="${T}" font-family="monospace">API</text><g transform="translate(170,30)"><rect x="-11" y="0" width="22" height="15" rx="2" fill="currentColor"/><path d="M-7 0v-4a7 7 0 0 1 14 0v4" fill="none" stroke="currentColor" stroke-width="2"/></g><g><rect x="-9" y="-6" width="18" height="12" rx="2" fill="currentColor"/><animateMotion dur="3s" repeatCount="indefinite" path="M96 55 L246 55"/><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.45;.5;1" dur="3s" repeatCount="indefinite"/></g><g><rect x="-9" y="-6" width="18" height="12" rx="2" fill="${G}"/><animateMotion dur="3s" begin="1.5s" repeatCount="indefinite" path="M246 78 L96 78"/><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.06;.45;.5" dur="3s" begin="1.5s" repeatCount="indefinite"/></g></svg>`},
+crypto:{c:"A key turns readable text into unreadable ciphertext.", s:`<svg viewBox="0 0 340 130"><text x="58" y="66" font-size="19" font-family="monospace" fill="${T}"><animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;.35;.45;.9;1" dur="3.5s" repeatCount="indefinite"/>HELLO</text><text x="232" y="66" font-size="17" font-family="monospace" fill="currentColor"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.45;.55;.9;1" dur="3.5s" repeatCount="indefinite"/>4f#9aK2</text><g transform="translate(170,54)"><rect x="-13" y="0" width="26" height="20" rx="3" fill="currentColor"/><path d="M-8 0v-6a8 8 0 0 1 16 0v6" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="0" cy="9" r="3" fill="#0a1626"/></g><text x="170" y="100" text-anchor="middle" font-size="8" fill="${T}" font-family="monospace">ENCRYPT →</text></svg>`},
+iam:{c:"Verify identity with multiple factors before granting access.", s:`<svg viewBox="0 0 340 130"><g stroke="${N}" stroke-width="2" fill="none"><circle cx="40" cy="48" r="9"/><path d="M26 78c0-9 6-15 14-15s14 6 14 15"/></g><line x1="182" y1="28" x2="182" y2="96" stroke="${N}" stroke-width="3"/><line x1="252" y1="28" x2="252" y2="96" stroke="${N}" stroke-width="3"/><line x1="182" y1="38" x2="252" y2="38" stroke="currentColor" stroke-width="4"><animateTransform attributeName="transform" type="rotate" values="0 182 38;0 182 38;-72 182 38;-72 182 38;0 182 38" keyTimes="0;.5;.65;.9;1" dur="4s" repeatCount="indefinite"/></line><rect x="92" y="40" width="30" height="16" rx="3" fill="none" stroke="currentColor"><animate attributeName="stroke-opacity" values=".2;1;1;1" keyTimes="0;.2;.5;1" dur="4s" repeatCount="indefinite"/></rect><text x="107" y="52" text-anchor="middle" font-size="8" fill="${T}" font-family="monospace">PWD</text><rect x="128" y="40" width="34" height="16" rx="3" fill="none" stroke="currentColor"><animate attributeName="stroke-opacity" values=".2;.2;1;1" keyTimes="0;.35;.5;1" dur="4s" repeatCount="indefinite"/></rect><text x="145" y="52" text-anchor="middle" font-size="8" fill="${T}" font-family="monospace">MFA</text><text x="217" y="114" text-anchor="middle" font-size="9" fill="${G}" font-family="monospace"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.6;.7;.9;1" dur="4s" repeatCount="indefinite"/>ACCESS GRANTED</text></svg>`},
+data:{c:"Encrypt and mask sensitive records at rest.", s:`<svg viewBox="0 0 340 130"><g stroke="${N}" stroke-width="2" fill="#22344d"><ellipse cx="110" cy="30" rx="48" ry="12"/><path d="M62 30v54c0 6.6 21.5 12 48 12s48-5.4 48-12V30"/></g><g font-family="monospace" font-size="11"><text x="88" y="56" fill="${T}"><animate attributeName="opacity" values="1;1;0" keyTimes="0;.4;.5" dur="3s" repeatCount="indefinite"/>4921 88</text><text x="88" y="56" fill="currentColor"><animate attributeName="opacity" values="0;0;1" keyTimes="0;.5;.6" dur="3s" repeatCount="indefinite"/>**** **</text><text x="88" y="76" fill="${T}"><animate attributeName="opacity" values="1;1;0" keyTimes="0;.5;.6" dur="3s" repeatCount="indefinite"/>Aadhaar</text><text x="88" y="76" fill="currentColor"><animate attributeName="opacity" values="0;0;1" keyTimes="0;.6;.7" dur="3s" repeatCount="indefinite"/>XXXXXXX</text></g><path d="M232 28l20 6v14c0 12-8 18-20 23-12-5-20-11-20-23V34z" fill="currentColor" fill-opacity=".15" stroke="currentColor" stroke-width="2"/><path d="M224 50l6 6 12-13" stroke="${G}" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`},
+governance:{c:"Assess and score risk to steer security decisions.", s:`<svg viewBox="0 0 340 130"><path d="M100 100 A70 70 0 0 1 240 100" fill="none" stroke="#22344d" stroke-width="12" stroke-linecap="round"/><path d="M100 100 A70 70 0 0 1 240 100" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round" stroke-dasharray="220" stroke-dashoffset="220"><animate attributeName="stroke-dashoffset" values="220;95;150;95" dur="4s" repeatCount="indefinite"/></path><line x1="170" y1="100" x2="170" y2="46" stroke="#E4ECF5" stroke-width="3" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" values="-72 170 100;34 170 100;-8 170 100;34 170 100" dur="4s" repeatCount="indefinite"/></line><circle cx="170" cy="100" r="6" fill="#E4ECF5"/><text x="92" y="114" font-size="8" fill="${T}" font-family="monospace">LOW</text><text x="222" y="114" font-size="8" fill="${T}" font-family="monospace">HIGH</text></svg>`},
+compliance:{c:"Tick every control, then prove it in an audit.", s:`<svg viewBox="0 0 340 130"><g font-family="monospace" font-size="10" fill="${T}"><rect x="60" y="24" width="14" height="14" rx="3" fill="none" stroke="${N}" stroke-width="2"/><text x="84" y="35">ISO 27001</text><rect x="60" y="50" width="14" height="14" rx="3" fill="none" stroke="${N}" stroke-width="2"/><text x="84" y="61">SOC 2</text><rect x="60" y="76" width="14" height="14" rx="3" fill="none" stroke="${N}" stroke-width="2"/><text x="84" y="87">PCI-DSS</text></g><g stroke="${G}" stroke-width="2.5" fill="none" stroke-linecap="round"><path d="M63 31l3 4 6-8"><animate attributeName="opacity" values="0;1;1" keyTimes="0;.2;1" dur="4s" repeatCount="indefinite"/></path><path d="M63 57l3 4 6-8"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;.35;.45;1" dur="4s" repeatCount="indefinite"/></path><path d="M63 83l3 4 6-8"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;.6;.7;1" dur="4s" repeatCount="indefinite"/></path></g><g transform="rotate(-12 255 58)"><circle cx="255" cy="58" r="26" fill="none" stroke="${G}" stroke-width="3"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.75;.82;.97;1" dur="4s" repeatCount="indefinite"/></circle><text x="255" y="63" text-anchor="middle" font-size="13" font-family="monospace" fill="${G}"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.75;.82;.97;1" dur="4s" repeatCount="indefinite"/>PASS</text></g></svg>`},
+awareness:{c:"Spot the phishing bait — don't take the hook.", s:`<svg viewBox="0 0 340 130"><g stroke="${N}" stroke-width="2" fill="none"><circle cx="80" cy="66" r="12"/><path d="M58 100c0-13 10-21 22-21s22 8 22 21"/></g><g><path d="M180 6 v34 a11 11 0 0 1 -22 0" fill="none" stroke="${T}" stroke-width="2"/><rect x="150" y="40" width="26" height="17" rx="2" fill="${R}"/><animateTransform attributeName="transform" type="translate" values="0 -14;0 26;0 26;0 -46;0 -14" keyTimes="0;.35;.5;.7;1" dur="3.5s" repeatCount="indefinite"/></g><g stroke="${R}" stroke-width="3" stroke-linecap="round"><path d="M120 58l16 16M136 58l-16 16"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.42;.5;.62;.68" dur="3.5s" repeatCount="indefinite"/></path></g><text x="170" y="120" text-anchor="middle" font-size="8" fill="${T}" font-family="monospace">PHISHING SIMULATION</text></svg>`},
+bcdr:{c:"When the primary fails, traffic fails over to backup.", s:`<svg viewBox="0 0 340 130"><circle cx="40" cy="62" r="10" fill="none" stroke="${N}" stroke-width="2"/><rect x="150" y="22" width="54" height="34" rx="4" fill="#22344d" stroke="${N}" stroke-width="2"/><text x="177" y="16" text-anchor="middle" font-size="8" fill="${T}" font-family="monospace">PRIMARY</text><rect x="150" y="70" width="54" height="34" rx="4" fill="#22344d" stroke="${N}" stroke-width="2"/><text x="177" y="120" text-anchor="middle" font-size="8" fill="${T}" font-family="monospace">BACKUP</text><path d="M160 32l34 14M194 32l-34 14" stroke="${R}" stroke-width="2.5" stroke-linecap="round"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;.3;.42;1" dur="4s" repeatCount="indefinite"/></path><path d="M228 87l6 6 12-13" stroke="${G}" stroke-width="2.5" fill="none" stroke-linecap="round"><animate attributeName="opacity" values="0;0;0;1;1" keyTimes="0;.5;.55;.62;1" dur="4s" repeatCount="indefinite"/></path><circle r="5" fill="currentColor"><animateMotion dur="4s" repeatCount="indefinite" path="M50 62 L150 40"/><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.35;.4;1" dur="4s" repeatCount="indefinite"/></circle><circle r="5" fill="${G}"><animateMotion dur="4s" repeatCount="indefinite" path="M50 62 L150 88"/><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;.45;.5;1" dur="4s" repeatCount="indefinite"/></circle></svg>`},
+dfir:{c:"Reveal hidden evidence and rebuild the timeline.", s:`<svg viewBox="0 0 340 130"><line x1="40" y1="66" x2="300" y2="66" stroke="${N}" stroke-width="2"/><g>${[80,130,180,230,270].map((x,i)=>`<circle cx="${x}" cy="66" r="5" fill="${i===2||i===4?R:'currentColor'}"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${0.12+i*0.13};${0.18+i*0.13};1" dur="4s" repeatCount="indefinite"/></circle>`).join("")}</g><g><circle r="16" fill="#38bdf818" stroke="currentColor" stroke-width="2.5"/><line x1="12" y1="12" x2="23" y2="23" stroke="currentColor" stroke-width="3"/><animateMotion dur="4s" repeatCount="indefinite" path="M70 66 L285 66 L70 66"/></g><text x="170" y="112" text-anchor="middle" font-size="8" fill="${T}" font-family="monospace">TIMELINE RECONSTRUCTION</text></svg>`},
+threatintel:{c:"Map an adversary to its indicators and techniques.", s:`<svg viewBox="0 0 340 130"><g stroke="currentColor" stroke-width="1.5">${[[80,32],[268,38],[62,96],[280,98],[170,16]].map((p,i)=>`<line x1="170" y1="62" x2="${p[0]}" y2="${p[1]}" stroke-dasharray="120" stroke-dashoffset="120"><animate attributeName="stroke-dashoffset" values="120;120;0;0" keyTimes="0;${0.1+i*0.12};${0.3+i*0.12};1" dur="4s" repeatCount="indefinite"/></line>`).join("")}</g><g fill="currentColor">${[[80,32],[268,38],[62,96],[280,98],[170,16]].map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="6"><animate attributeName="opacity" values=".2;.2;1;1" keyTimes="0;${0.2+i*0.12};${0.32+i*0.12};1" dur="4s" repeatCount="indefinite"/></circle>`).join("")}</g><circle cx="170" cy="62" r="13" fill="${R}" fill-opacity=".85"/><text x="170" y="92" text-anchor="middle" font-size="8" fill="${T}" font-family="monospace">ACTOR → IOCs</text></svg>`},
+malware:{c:"Detonate malware safely and dissect its behavior.", s:`<svg viewBox="0 0 340 130"><rect x="70" y="18" width="200" height="90" rx="6" fill="none" stroke="${N}" stroke-width="2" stroke-dasharray="5 4"/><text x="170" y="12" text-anchor="middle" font-size="8" fill="${T}" font-family="monospace">SANDBOX</text><circle cx="170" cy="63" r="26" fill="${R}" fill-opacity=".5" stroke="${R}" stroke-width="2"><animate attributeName="r" values="24;28;24" dur="1.4s" repeatCount="indefinite"/></circle><g stroke="currentColor" stroke-width="1.5" fill="none"><path d="M154 63h32M170 47v32M158 52l24 22"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.4;.5;.9;1" dur="4s" repeatCount="indefinite"/></path></g><line x1="90" y1="18" x2="90" y2="108" stroke="currentColor" stroke-width="2"><animate attributeName="x1" values="90;250;90" dur="4s" repeatCount="indefinite"/><animate attributeName="x2" values="90;250;90" dur="4s" repeatCount="indefinite"/></line></svg>`},
+osint:{c:"Follow the funds across wallets to the flagged address.", s:`<svg viewBox="0 0 340 130"><path d="M70 62H110M150 62H190M230 62H270" stroke="${N}" stroke-width="2"/><g fill="#22344d" stroke="currentColor" stroke-width="2">${[50,130,210,290].map(x=>`<rect x="${x-14}" y="48" width="28" height="28" rx="4"/>`).join("")}</g><circle r="6" fill="${A}"><animateMotion dur="4s" repeatCount="indefinite" path="M50 62 L130 62 L210 62 L290 62" keyPoints="0;.33;.66;1" keyTimes="0;.33;.66;1" calcMode="linear"/></circle><path d="M290 44v-18l16 6-16 6z" fill="${R}"><animate attributeName="opacity" values="0;0;0;1;1" keyTimes="0;.62;.68;.72;1" dur="4s" repeatCount="indefinite"/></path><text x="170" y="104" text-anchor="middle" font-size="8" fill="${T}" font-family="monospace">ON-CHAIN TRACING</text></svg>`},
+iot:{c:"Secure sensors, PLCs, and control signals in the plant.", s:`<svg viewBox="0 0 340 130"><rect x="30" y="60" width="280" height="12" rx="6" fill="#22344d" stroke="${N}"/><g fill="#22344d" stroke="${N}" stroke-width="2"><circle cx="100" cy="66" r="14"/><circle cx="200" cy="66" r="14"/></g><g stroke="${N}" stroke-width="2"><path d="M100 46v-8M200 46v-8"/></g><text x="100" y="34" text-anchor="middle" font-size="7" fill="${T}" font-family="monospace">PLC</text><path d="M200 28l12 4v8c0 7-5 11-12 13-7-2-12-6-12-13v-8z" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="1.5"/><circle r="5" fill="currentColor"><animateMotion dur="3s" repeatCount="indefinite" path="M40 66 H300"/></circle><text x="170" y="102" text-anchor="middle" font-size="8" fill="${T}" font-family="monospace">SCADA / OT NETWORK</text></svg>`},
+aiml:{c:"A tiny adversarial tweak flips the model's decision.", s:`<svg viewBox="0 0 340 130"><g stroke="${N}" stroke-width="1">${[[60,35],[60,63],[60,91]].flatMap(a=>[[150,25],[150,52],[150,79],[150,106]].map(b=>`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}"/>`)).join("")}${[[150,25],[150,52],[150,79],[150,106]].flatMap(a=>[[240,52],[240,82]].map(b=>`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}"/>`)).join("")}</g><g fill="currentColor">${[[60,35],[60,63],[60,91],[150,25],[150,52],[150,79],[150,106],[240,52],[240,82]].map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="6"/>`).join("")}</g><circle r="4" fill="${R}"><animateMotion dur="4s" repeatCount="indefinite" path="M60 63 L150 52 L240 82"/></circle><text x="20" y="20" font-size="8" fill="${R}" font-family="monospace">+noise</text><text x="258" y="56" font-size="9" fill="${G}" font-family="monospace"><animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;.45;.5;.9;1" dur="4s" repeatCount="indefinite"/>CAT ✓</text><text x="258" y="86" font-size="9" fill="${R}" font-family="monospace"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.5;.55;.9;1" dur="4s" repeatCount="indefinite"/>DOG ✗</text></svg>`},
+hardware:{c:"Side-channel signals can leak secrets from silicon.", s:`<svg viewBox="0 0 340 130"><rect x="60" y="42" width="66" height="48" rx="4" fill="#22344d" stroke="${N}" stroke-width="2"/><g stroke="${N}" stroke-width="2">${[0,1,2,3].map(i=>`<line x1="${72+i*16}" y1="42" x2="${72+i*16}" y2="34"/><line x1="${72+i*16}" y1="90" x2="${72+i*16}" y2="98"/>`).join("")}</g><text x="93" y="70" text-anchor="middle" font-size="8" fill="${T}" font-family="monospace">MCU</text><line x1="88" y1="20" x2="88" y2="34" stroke="currentColor" stroke-width="2"><animate attributeName="opacity" values=".3;1;.3" dur="1.4s" repeatCount="indefinite"/></line><circle cx="88" cy="18" r="4" fill="currentColor"/><path id="waveH" d="M150 66 q10 -18 20 0 t20 0 t20 0 t20 0 t20 0 t20 0" fill="none" stroke="currentColor" stroke-width="2"/><circle r="4" fill="${R}"><animateMotion dur="2s" repeatCount="indefinite"><mpath href="#waveH"/></animateMotion></circle><text x="240" y="98" text-anchor="middle" font-size="8" fill="${R}" font-family="monospace"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.5;.6;.9;1" dur="4s" repeatCount="indefinite"/>KEY LEAKED</text></svg>`},
+web3:{c:"An audit catches the re-entrancy loop before it drains funds.", s:`<svg viewBox="0 0 340 130"><g fill="#22344d" stroke="currentColor" stroke-width="2"><rect x="40" y="42" width="46" height="40" rx="4"><animate attributeName="opacity" values="0;1;1;1" keyTimes="0;.15;1;1" dur="4s" repeatCount="indefinite"/></rect><rect x="118" y="42" width="46" height="40" rx="4"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;.28;.4;1" dur="4s" repeatCount="indefinite"/></rect><rect x="196" y="42" width="46" height="40" rx="4"><animate attributeName="opacity" values="0;0;0;1;1" keyTimes="0;.5;.6;.66;1" dur="4s" repeatCount="indefinite"/></rect></g><g stroke="${T}" stroke-width="2"><path d="M86 62h32"/><path d="M164 62h32"/></g><path d="M272 62c30 0 30 -36 0 -36 -16 0 -20 12 -20 12" fill="none" stroke="${R}" stroke-width="2.5"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;.6;.7;1" dur="4s" repeatCount="indefinite"/></path><path d="M256 62l11 3v6c0 6-4.5 9-11 11-6.5-2-11-5-11-11v-6z" fill="${G}" fill-opacity=".2" stroke="${G}" stroke-width="1.5"><animate attributeName="opacity" values="0;0;0;1;1" keyTimes="0;.7;.76;.82;1" dur="4s" repeatCount="indefinite"/></path><text x="150" y="106" text-anchor="middle" font-size="8" fill="${T}" font-family="monospace">SMART-CONTRACT AUDIT</text></svg>`}
+};
+
+const tree=document.getElementById('tree'), detailInner=document.getElementById('detailInner'),
+  empty=document.getElementById('empty'), detailBar=document.getElementById('detailBar'), root=document.documentElement;
+const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let totalDomains=DATA.reduce((n,f)=>n+f.domains.length,0);
+document.getElementById('famCount').textContent=DATA.length;
+document.getElementById('domCount').textContent=totalDomains;
+
+DATA.forEach((fam,fi)=>{
+  const color=getComputedStyle(root).getPropertyValue(FAM_COLORS[fi]).trim();
+  const famEl=document.createElement('div');
+  famEl.className='family';famEl.style.setProperty('--fam',color);famEl.dataset.fi=fi;
+  const head=document.createElement('button');
+  head.className='fam-head';head.setAttribute('aria-expanded','false');
+  head.innerHTML=`<span class="fam-node"></span><span class="fam-title"><strong>${fam.name}</strong><small>${fam.sub}</small></span><span class="fam-count">${fam.domains.length}</span><svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>`;
+  head.addEventListener('click',()=>toggleFamily(famEl));
+  const leaves=document.createElement('div');leaves.className='leaves';
+  fam.domains.forEach((dom,di)=>{
+    const leaf=document.createElement('button');
+    leaf.className='leaf';leaf.dataset.fi=fi;leaf.dataset.di=di;
+    leaf.innerHTML=`<span>${dom.name}</span>`;
+    leaf.addEventListener('click',()=>selectDomain(fi,di,leaf,color));
+    leaves.appendChild(leaf);
+  });
+  famEl.appendChild(head);famEl.appendChild(leaves);tree.appendChild(famEl);
+});
+function toggleFamily(famEl){
+  const open=famEl.classList.contains('open');
+  famEl.classList.toggle('open',!open);
+  famEl.querySelector('.fam-head').setAttribute('aria-expanded',String(!open));
+}
+let activeLeaf=null;
+function selectDomain(fi,di,leafEl,color){
+  const dom=DATA[fi].domains[di];
+  if(activeLeaf)activeLeaf.classList.remove('active');
+  leafEl.classList.add('active');activeLeaf=leafEl;
+  detailBar.style.background=color;
+  detailInner.style.setProperty('--acc',color);
+  detailInner.style.setProperty('--acc-soft',color+'1c');
+  detailInner.style.setProperty('--acc-bord',color+'55');
+  const viz=VIZ[dom.anim];
+  const vizHTML=viz?`<div class="viz">${viz.s}<div class="viz-cap">${viz.c}</div></div>`:'';
+  detailInner.innerHTML=`
+    <div class="d-fam"><span class="sq"></span>${DATA[fi].name}</div>
+    <h2 class="d-name">${dom.name}</h2>
+    <p class="d-def">${dom.def}</p>
+    ${vizHTML}
+    <div class="d-section"><p class="d-label">Core topics</p><div class="chips">${dom.topics.map(t=>`<span class="chip">${t}</span>`).join('')}</div></div>
+    <div class="d-section"><p class="d-label">Tools of the trade</p><div class="chips">${dom.tools.map(t=>`<span class="chip tool">${t}</span>`).join('')}</div></div>
+    <div class="d-section"><p class="d-label">Where it leads</p><div class="chips">${dom.roles.map(t=>`<span class="chip role">${t}</span>`).join('')}</div></div>`;
+  empty.style.display='none';detailInner.style.display='block';
+  if(reduceMotion){detailInner.querySelectorAll('svg').forEach(s=>{if(s.pauseAnimations)s.pauseAnimations();});}
+}
+const search=document.getElementById('search');
+search.addEventListener('input',()=>{
+  const q=search.value.trim().toLowerCase();
+  const families=[...document.querySelectorAll('.family')];
+  if(!q){families.forEach(f=>{f.classList.remove('hidden','open');f.querySelectorAll('.leaf').forEach(l=>l.style.display='');f.querySelector('.fam-head').setAttribute('aria-expanded','false');});return;}
+  families.forEach(f=>{
+    const fi=+f.dataset.fi;let anyMatch=false;
+    f.querySelectorAll('.leaf').forEach(l=>{
+      const dom=DATA[fi].domains[+l.dataset.di];
+      const hay=(dom.name+' '+dom.topics.join(' ')+' '+dom.tools.join(' ')+' '+dom.roles.join(' ')).toLowerCase();
+      const hit=hay.includes(q);l.style.display=hit?'':'none';if(hit)anyMatch=true;
+    });
+    f.classList.toggle('hidden',!anyMatch);f.classList.toggle('open',anyMatch);
+    f.querySelector('.fam-head').setAttribute('aria-expanded',String(anyMatch));
+  });
+});
+document.getElementById('reset').addEventListener('click',()=>{
+  search.value='';
+  document.querySelectorAll('.family').forEach(f=>{f.classList.remove('hidden','open');f.querySelectorAll('.leaf').forEach(l=>{l.style.display='';l.classList.remove('active');});f.querySelector('.fam-head').setAttribute('aria-expanded','false');});
+  activeLeaf=null;detailInner.style.display='none';empty.style.display='flex';detailBar.style.background='var(--cyan)';
+});
+document.querySelector('.family').classList.add('open');
+document.querySelector('.family .fam-head').setAttribute('aria-expanded','true');
+</script>
+</body>
+</html>
